@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 body{
-    background: linear-gradient(45deg, #0a0a0a , #3a4452);
+    background: #f3f3f3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,7 @@ body{
 .container{
     background-color: transparent;
     border: 1px solid #717377;
-    border-radius: 16px;
+    border-radius: 2px;
     padding: 16px;
     box-shadow: 0px 3px 15px rgba(113 , 115 , 119 , 0.5);
 
@@ -24,47 +24,71 @@ body{
 .display{
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 3px 15px rgba(84 , 84 , 84 , 0.5);
-    border-radius: 9px;
+    /* box-shadow: 0px 3px 15px rgba(84 , 84 , 84 , 0.5); */
+    /* border-radius: 9px; */
+
 }
 input{
-    width: 310px;
+    width: 330px;
     border: none;
-    background: transparent;
+    background: #f3f3f3;
     font-size: 20px;
     text-align: right;
     color: #717377;
     bottom: 0;
-    padding: 20px 0px;
+    padding: 20px 5px;
 
 }
-input::placeholder{
-    color: #ffffff;
+.para{
+    font-size: 22px;
+    font-weight: 800;
 }
+i{
+    font-weight: 500;
+}
+
 .result-input{
-    width: 310px;
+    width: 330px;
     border: none;
     background: transparent;
     font-size: 30px;
     text-align: right;
-    color: #ffffff;
     padding: 8px  0px 20px 0px;
 }
 button{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin: 10px;
-    background: transparent;
+    width: 80px;
+    height: 50px;
+    border-radius: 5px;
+    background: #f9f9f9;
     border: none;
-    box-shadow: -4px -4px 15px rgba(255 , 255 , 255 , 0.1);
-    color: #ffffff ;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: black ;
     cursor: pointer;
     font-size: 20px;
+    margin: 2px;
 }
 .equal-btn{
-    background-color: #fb7c14;
+    background-color: #005A9E;
+    color: #fff;
 }
 .operator-btn{
-    color: #6dee0a;
+    font-size: 22px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.row{
+    margin-bottom: 2px;
+}
+
+@media screen and (max-width : 390px) {
+    button{
+        width: 55px;
+        height: 35px;
+    }
+    input , .result-input{
+        width: 250px;
+    }
 }

@@ -4,27 +4,105 @@ let resultInput = document.querySelector(".result-input");
 
 let string = "";
 let arr = Array.from(buttons);
+// console.log(arr)
+let isEquationCompleted = false; 
 
 arr.forEach(buttons => {
     buttons.addEventListener('click', (e) => {
-        if (e.target.innerHTML === '=') {
-            let result = eval(string);
-            resultInput.value = result;
-        }
-        else if (e.target.innerHTML === 'AC') {
-            string = "";
-            input.value = string;
-            resultInput.value = "";
-        } else if (e.target.innerHTML === 'DEL') {
-            string = string.substring(0, string.length - 1);
-            input.value = string;
-        } else if (e.target.innerHTML === '%') {
-            string = eval(string) / 100;
-            input.value = string;
-        }
-        else {
-            string += e.target.innerHTML;
-            input.value = string;
-        }
+        handleButton(e.target.innerHTML);
+        
+        
     })
 })
+
+document.addEventListener('keydown' , (e) =>{
+    let key = e.key
+
+    const buttonEle = Array.from(buttons).find(button =>button.innerHTML === key)
+
+    console.dir(buttonEle)
+    if (buttonEle) {
+        handleButton(key);
+    }else if(key === "Escape"){
+        clearAll();
+        isEquationCompleted = false
+    }else if( key === "Delete"){
+        deleteChar()
+    }else if(key === "Enter"){
+        calculateResult()
+        isEquationCompleted = true;
+    }
+})
+
+function handleButton(buttonValue){
+    if (isEquationCompleted  && !isOperator(buttonValue)) {
+        
+        clearAll();
+        isEquationCompleted = false;  
+    }
+    if(buttonValue === '+' || buttonValue === "-" || buttonValue === "*"){
+       handleOperator(buttonValue);
+    }else if (buttonValue === '=') {
+        calculateResult()
+        isEquationCompleted = true;
+    }
+    else if (buttonValue === 'C') {
+        clearAll()
+    } else if (buttonValue === '<i class="fa-solid fa-delete-left"></i>') {
+       deleteChar()
+    } else if (buttonValue === '%') {
+        percentage()
+    }
+    else {
+        handleNumber(buttonValue)
+    }
+}
+
+function handleOperator(operator) {
+    if (string.length > 0 && isOperator(string[string.length - 1])) {
+        string = string.slice(0, -1) + operator;
+    } else {
+        string += operator;
+    }
+    input.value = string;
+}
+
+function calculateResult() {
+    let result;
+    try {
+        result = Function('"use strict";return (' + string + ')')();
+    } finally {
+        if (isNaN(result) || result === Infinity || result === -Infinity) {
+            resultInput.value = 'Error';
+        } else {
+            resultInput.value = result;
+        }
+    }
+}
+
+function clearAll(){
+    string = ""
+    input.value = string;
+    resultInput.value = ""
+}
+
+function deleteChar(){
+    string = string.slice(0 , -1);
+    input.value = string;
+}
+
+function percentage(){
+    let result= parseFloat((string) / 100);
+
+    string = result.toString();
+    input.value = string
+}
+
+function handleNumber(number){
+    string += number;
+    input.value = string;
+}
+
+function isOperator(char) {
+    return ['+', '-', '*', '/'].includes(char);
+}
