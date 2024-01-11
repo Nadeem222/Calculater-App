@@ -10,7 +10,7 @@ let isEquationCompleted = false;
 arr.forEach(buttons => {
     buttons.addEventListener('click', (e) => {
         handleButton(e.target.innerHTML);
-        
+        // console.log(e)
         
     })
 })
@@ -20,7 +20,7 @@ document.addEventListener('keydown' , (e) =>{
 
     const buttonEle = Array.from(buttons).find(button =>button.innerHTML === key)
 
-    console.dir(buttonEle)
+    // console.dir(buttonEle)
     if (buttonEle) {
         handleButton(key);
     }else if(key === "Escape"){
@@ -70,13 +70,14 @@ function handleOperator(operator) {
 function calculateResult() {
     let result;
     try {
-        result = Function('"use strict";return (' + string + ')')();
-    } finally {
+        result = eval(string); 
         if (isNaN(result) || result === Infinity || result === -Infinity) {
             resultInput.value = 'Error';
         } else {
             resultInput.value = result;
         }
+    } catch (error) {
+        resultInput.value = 'Error';
     }
 }
 
